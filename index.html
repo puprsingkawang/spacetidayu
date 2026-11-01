@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Buku Saku Space Tidayu</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap">
+    <style>
+        :root {
+            --bg: #f2f4f0;
+            --card: #fff;
+            --ink: #16221d;
+            --mut: #5b6b64;
+            --line: #dbe2dc;
+            --g: #0f5c4d;
+            --r: #b4332a;
+            --y: #b8861b;
+            --gs: #e1efe9;
+            --rs: #f8e4e1;
+            --ys: #f6ecd2;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #101815;
+                --card: #18231f;
+                --ink: #e8efeb;
+                --mut: #9db0a7;
+                --line: #2a3a34;
+                --g: #4fc3a6;
+                --r: #ee8a80;
+                --y: #e3b955;
+                --gs: #1d3a32;
+                --rs: #3d2320;
+                --ys: #3a3018
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #101815;
+            --card: #18231f;
+            --ink: #e8efeb;
+            --mut: #9db0a7;
+            --line: #2a3a34;
+            --g: #4fc3a6;
+            --r: #ee8a80;
+            --y: #e3b955;
+            --gs: #1d3a32;
+            --rs: #3d2320;
+            --ys: #3a3018
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 400 15px/1.55 "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif
+        }
+
+        main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 16px 16px 96px
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+            line-height: 1.2
+        }
+
+        header.hero {
+            background: var(--g);
+            color: #fff;
+            border-radius: 18px;
+            padding: 22px 20px;
+            margin-bottom: 16px;
+            border-bottom: 5px solid var(--y)
+        }
+
+        header.hero small {
+            opacity: .85;
+            font-size: 13px
+        }
+
+        header.hero h1 {
+            font-size: 30px;
+            font-weight: 800;
+            margin: 6px 0 8px
+        }
+
+        header.hero p {
+            margin: 0;
+            font-size: 14px;
+            opacity: .95
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 800;
+            margin: 4px 0 12px
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 12px
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin-bottom: 6px
+        }
+
+        .mut {
+            color: var(--mut);
+            font-size: 13px
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px
+        }
+
+        .stat {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center
+        }
+
+        .stat b {
+            display: block;
+            font-size: 22px;
+            color: var(--g)
+        }
+
+        .stat span {
+            font-size: 12px;
+            color: var(--mut)
+        }
+
+        nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--card);
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: center;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            z-index: 5
+        }
+
+        nav a {
+            flex: 1;
+            max-width: 128px;
+            text-align: center;
+            padding: 10px 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--mut);
+            text-decoration: none;
+            border-top: 3px solid transparent
+        }
+
+        nav a.on {
+            color: var(--g);
+            border-top-color: var(--r)
+        }
+
+        nav a:focus-visible,
+        button:focus-visible,
+        summary:focus-visible {
+            outline: 2px solid var(--g);
+            outline-offset: 2px
+        }
+
+        .seg {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+            flex-wrap: wrap
+        }
+
+        .seg button {
+            border: 1px solid var(--line);
+            background: var(--card);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 7px 13px;
+            font: 600 13px inherit;
+            font-family: inherit;
+            cursor: pointer
+        }
+
+        .seg button.on {
+            background: var(--g);
+            color: var(--bg);
+            border-color: var(--g)
+        }
+
+        details.st {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-left: 5px solid var(--g);
+            border-radius: 12px;
+            margin-bottom: 8px
+        }
+
+        details.st.Ketua {
+            border-left-color: var(--y)
+        }
+
+        details.st.Pemohon {
+            border-left-color: var(--r)
+        }
+
+        details.st summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            gap: 10px;
+            padding: 12px;
+            align-items: flex-start
+        }
+
+        details.st summary::-webkit-details-marker {
+            display: none
+        }
+
+        .n {
+            flex: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--gs);
+            color: var(--g);
+            font-weight: 800;
+            font-size: 13px;
+            display: grid;
+            place-items: center
+        }
+
+        .Pemohon .n {
+            background: var(--rs);
+            color: var(--r)
+        }
+
+        .Ketua .n {
+            background: var(--ys);
+            color: var(--y)
+        }
+
+        .t {
+            flex: 1;
+            font-size: 14px
+        }
+
+        .tm {
+            flex: none;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--mut);
+            white-space: nowrap
+        }
+
+        .bd {
+            padding: 0 12px 12px 50px;
+            font-size: 13px;
+            color: var(--mut)
+        }
+
+        .bd b {
+            color: var(--ink)
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 6px;
+            padding: 1px 7px;
+            margin-right: 6px;
+            background: var(--gs);
+            color: var(--g)
+        }
+
+        .tag.Pemohon {
+            background: var(--rs);
+            color: var(--r)
+        }
+
+        .tag.Ketua {
+            background: var(--ys);
+            color: var(--y)
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px
+        }
+
+        li {
+            margin-bottom: 5px
+        }
+
+        .warn {
+            background: var(--ys);
+            border-left: 5px solid var(--y);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            font-size: 14px
+        }
+
+        .warn.red {
+            background: var(--rs);
+            border-left-color: var(--r)
+        }
+
+        .chk label {
+            display: flex;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--line);
+            align-items: flex-start
+        }
+
+        .chk input {
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--g)
+        }
+
+        .hid {
+            display: none
+        }
+
+        @media(prefers-reduced-motion:no-preference) {
+            section {
+                animation: in .2s
+            }
+
+            @keyframes in {
+                from {
+                    opacity: .4
+                }
+
+                to {
+                    opacity: 1
+                }
+            }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 55px 25px;
+        }
+
+        .hero-logo {
+            margin-bottom: 18px;
+        }
+
+        .hero-logo img {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .12));
+        }
+
+        .hero small {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            margin: 12px 0;
+            font-size: clamp(36px, 5vw, 58px);
+            font-weight: 800;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <header class="hero">
+            <div class="hero-logo">
+                <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Lambang_KotaSingkawang.png/250px-Lambang_KotaSingkawang.png?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=thumbnail"
+                    alt="Logo Pemerintah Kota Singkawang">
+            </div>
+
+            <small>Dinas PUPR Kota Singkawang</small>
+            <h1>Space Tidayu</h1>
+            <p>
+                Buku saku layanan konsultasi dan pendampingan pra-permohonan
+                KKPR, PBG, SLF, Informasi Lahan, dan Peil Banjir.
+            </p>
+        </header>
+
+        <section id="beranda">
+            <div class="stats">
+                <div class="stat"><b>14</b><span>langkah layanan</span></div>
+                <div class="stat"><b>Gratis</b><span>tanpa biaya</span></div>
+                <div class="stat"><b>3</b><span>peran pelaksana</span></div>
+            </div>
+            <div class="card">
+                <h3>Apa itu Space Tidayu?</h3>
+                <p style="margin:0">Pendampingan awal dua arah sebelum pemohon mengunggah berkas ke SIMBG/OSS. Dinas
+                    mengundang pemangku kepentingan untuk memberi edukasi regulasi tata ruang dan bangunan gedung,
+                    sehingga berkas sudah benar sebelum diajukan.</p>
+            </div>
+            <div class="card">
+                <h3>Mengapa ada?</h3>
+                <ul>
+                    <li>Berkas sering tidak lengkap atau salah format, lalu dikembalikan berulang kali (retur).</li>
+                    <li>Pemohon kurang paham aturan intensitas ruang (GSB, KDB, KLB, KDH).</li>
+                    <li>Layanan selama ini pasif: koreksi baru terjadi saat verifikasi akhir.</li>
+                    <li>Proses lambat memicu risiko bangunan liar dan pemanfaatan lahan tidak sesuai tata ruang.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Tujuan</h3>
+                <ul>
+                    <li>Memotong kesalahan dan ketidaklengkapan dokumen di hulu.</li>
+                    <li>Mempercepat penerbitan rekomendasi teknis KKPR, PBG, dan SLF.</li>
+                    <li>Menurunkan frekuensi retur di SIMBG/OSS.</li>
+                    <li>Menjamin kepastian waktu, kepastian hukum, dan transparansi.</li>
+                    <li>Meningkatkan IKM, kemudahan berusaha, dan PAD.</li>
+                </ul>
+            </div>
+            <div class="warn red"><b>Ingat:</b> hasil pendampingan bukan penetapan atau persetujuan KKPR/PBG-SLF.</div>
+        </section>
+
+        <section id="alur" class="hid">
+            <h2>Alur layanan</h2>
+            <div class="seg" id="flowSeg"><button class="on" data-f="0">Pendampingan</button><button
+                    data-f="1">Kunjungan tamu</button></div>
+            <div class="seg" id="roleSeg"><button class="on" data-r="">Semua</button><button
+                    data-r="Pemohon">Pemohon</button><button data-r="Petugas">Petugas</button><button
+                    data-r="Ketua">Ketua tim</button></div>
+            <p class="mut" id="flowNote"></p>
+            <div id="steps"></div>
+        </section>
+
+        <section id="layanan" class="hid">
+            <h2>Jenis layanan</h2>
+            <div class="card">
+                <h3>Informasi Lahan dan KKPR</h3>
+                <p class="mut" style="margin:0">Surat permohonan informasi lahan dialihkan ke SOP Penerimaan Surat
+                    Masuk. Pemohon membawa surat informasi lahan.</p>
+            </div>
+            <div class="card">
+                <h3>PBG dan SLF</h3>
+                <p class="mut" style="margin:0">Persetujuan Bangunan Gedung dan Sertifikat Laik Fungsi, diajukan melalui
+                    SIMBG. Petugas dapat mendampingi pengisian dan unggah berkas.</p>
+            </div>
+            <div class="card">
+                <h3>Peil Banjir</h3>
+                <p class="mut" style="margin:0">Informasi dan persyaratan peil banjir dijelaskan pada tahap penjelasan
+                    regulasi dan alur.</p>
+            </div>
+            <h2 style="margin-top:18px">Daftar periksa pemohon</h2>
+            <div class="card chk" id="chk">
+                <label><input type="checkbox"> Identitas dan kontak pemohon</label>
+                <label><input type="checkbox"> Alamat atau koordinat lokasi</label>
+                <label><input type="checkbox"> Batas lokasi dan luas lahan</label>
+                <label><input type="checkbox"> Jenis kegiatan dan tujuan pendampingan</label>
+                <label><input type="checkbox"> Rencana intensitas bangunan dan kondisi bangunan</label>
+                <label><input type="checkbox"> Berkas persyaratan sesuai bidang layanan</label>
+                <label><input type="checkbox"> Surat informasi lahan (bila mengajukan informasi lahan)</label>
+                <p class="mut" style="margin:10px 0 0">Daftar ini diringkas dari isi formulir pencatatan konsultasi.
+                    Persyaratan resmi tiap bidang dijelaskan petugas saat pendampingan; pastikan persyaratan terbaru.
+                </p>
+            </div>
+        </section>
+
+        <section id="mutu" class="hid">
+            <h2>Pelaksana dan mutu baku</h2>
+            <div class="card">
+                <h3>Peran</h3>
+                <p style="margin:0"><span class="tag Pemohon">Pemohon</span> hadir, mengisi form, menyiapkan dan
+                    memperbaiki berkas.<br><br><span class="tag">Petugas</span> melayani, menjelaskan, memeriksa berkas,
+                    mencatat, dan mendampingi unggah.<br><br><span class="tag Ketua">Ketua tim</span> mengundang dan
+                    mengagendakan jadwal pendampingan.</p>
+            </div>
+            <div class="card">
+                <h3>Kualifikasi pelaksana</h3>
+                <ul>
+                    <li>Memahami pelayanan prima, komunikatif, dan mengenal struktur organisasi.</li>
+                    <li>Memahami tugas pokok dan fungsi unit kerja.</li>
+                    <li>Paham proses perizinan KKPR dan KRK serta peraturan ketataruangan lain.</li>
+                    <li>Paham proses perizinan PBG dan SLF.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Peralatan</h3>
+                <ul>
+                    <li>Meja front office dan meja pelayanan</li>
+                    <li>Buku tamu dan buku register manual/digital</li>
+                    <li>Komputer/laptop, printer, jaringan internet</li>
+                    <li>Aplikasi OSS, SIPTARU, SIMBG (akun instansi)</li>
+                    <li>Telepon/WhatsApp layanan, surel, media sosial resmi dinas</li>
+                    <li>Alat tulis kantor</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Pencatatan dan pendataan</h3>
+                <ul>
+                    <li>Buku register konsultasi</li>
+                    <li>Informasi materi konsultasi</li>
+                    <li>Rekapitulasi berkala semester/tahunan</li>
+                    <li>Data konsultasi di OSS, SIPTARU, SIMBG (arsip elektronik)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>SOP terkait</h3>
+                <ul>
+                    <li>SOP Pelayanan Informasi Lahan</li>
+                    <li>SOP Pertimbangan Teknis PKKPR</li>
+                    <li>SOP Pemberian Bantuan Teknis Penilaian Bangunan</li>
+                    <li>SOP Penerbitan Rekomendasi Teknis PBG dan SLF</li>
+                    <li>SOP Survei Kepuasan Masyarakat</li>
+                    <li>SOP Kunjungan Tamu</li>
+                    <li>SOP Penerimaan Surat Masuk</li>
+                </ul>
+            </div>
+            <div class="warn"><b>Peringatan:</b> bila SOP tidak dijalankan, masyarakat bisa menerima informasi tidak
+                akurat dan keliru memenuhi persyaratan. Jawaban wajib mengacu pada Standar Pelayanan dan regulasi;
+                petugas tidak boleh menjanjikan hasil di luar ketentuan. Layanan konsultasi tidak dipungut biaya.</div>
+        </section>
+
+        <section id="acuan" class="hid">
+            <h2>Dasar hukum</h2>
+            <div class="card">
+                <ul>
+                    <li>UU No. 12 Tahun 2001 tentang Pembentukan Kota Singkawang</li>
+                    <li>UU No. 25 Tahun 2009 tentang Pelayanan Publik</li>
+                    <li>UU No. 28 Tahun 2002 tentang Bangunan Gedung</li>
+                    <li>UU No. 6 Tahun 2023 tentang Cipta Kerja</li>
+                    <li>PP No. 16 Tahun 2021 tentang Peraturan Pelaksanaan UU Bangunan Gedung</li>
+                    <li>PP No. 21 Tahun 2021 tentang Penyelenggaraan Penataan Ruang</li>
+                    <li>Permenpan-RB No. 15 Tahun 2014 tentang Pedoman Standar Pelayanan</li>
+                    <li>Permen ATR/BPN No. 21 Tahun 2021 tentang Pengendalian Pemanfaatan Ruang dan Pengawasan Penataan
+                        Ruang</li>
+                    <li>Perda No. 1 Tahun 2022 tentang RTRW Kota Singkawang 2022–2042</li>
+                    <li>Perwali No. 19 Tahun 2023 tentang Penyelenggaraan Pelayanan Publik</li>
+                    <li>Perwali No. 107 Tahun 2021 tentang Kedudukan, Susunan Organisasi, Tugas dan Fungsi Dinas PUPR
+                    </li>
+                    <li>Kepka Dinas PUPR No. 000.8.3.2/202/Set.01 Tahun 2026 tentang Standar Pelayanan Publik</li>
+                </ul>
+            </div>
+            <h2>Istilah</h2>
+            <div class="card">
+                <ul>
+                    <li><b>KKPR</b>: Kesesuaian Kegiatan Pemanfaatan Ruang</li>
+                    <li><b>PBG</b>: Persetujuan Bangunan Gedung</li>
+                    <li><b>SLF</b>: Sertifikat Laik Fungsi</li>
+                    <li><b>KRK</b>: Keterangan Rencana Kota</li>
+                    <li><b>GSB, KDB, KLB, KDH</b>: garis sempadan bangunan, koefisien dasar bangunan, koefisien lantai
+                        bangunan, koefisien dasar hijau</li>
+                    <li><b>RTRW / RDTR</b>: rencana tata ruang wilayah / rencana detail tata ruang</li>
+                    <li><b>SIMBG / OSS</b>: sistem informasi bangunan gedung / perizinan berusaha terintegrasi
+                        elektronik</li>
+                    <li><b>IKM</b>: Indeks Kepuasan Masyarakat</li>
+                </ul>
+            </div>
+            <p class="mut">Sumber: Narasi SOP Layanan Space Tidayu dan Bagan SOP (Nomor SOP 000.8.3.3/…/SET.01/2026,
+                efektif 25 Juni 2026). Ditetapkan oleh Kepala Dinas PUPR Kota Singkawang.</p>
+        </section>
+    </main>
+
+    <nav id="nav"><a href="#beranda">Beranda</a><a href="#alur">Alur</a><a href="#layanan">Layanan</a><a
+            href="#mutu">Pelaksana</a><a href="#acuan">Acuan</a></nav>
+
+    <script>
+        var F = [
+            {
+                note: "14 langkah, dari kedatangan sampai evaluasi kepuasan. Ketuk langkah untuk melihat rincian.", s: [
+                    ["Pemohon menyampaikan kebutuhan konsultasi atau pendampingan pra-permohonan", "Pemohon", "5 mnt", "Meja Layanan Space Tidayu", "Pemohon tiba di meja layanan"],
+                    ["Petugas memeriksa jenis permohonan. Jika surat permohonan informasi lahan, beralih ke SOP Penerimaan Surat Masuk", "Petugas", "5 mnt", "Surat informasi lahan", "Verifikasi kunjungan pemohon"],
+                    ["Ketua tim mengundang dan mengagendakan jadwal pendampingan berdasarkan permohonan masuk", "Ketua", "1 hari", "Surat informasi lahan", "Surat undangan pendampingan/konsultasi"],
+                    ["Pemohon mengisi Form Pendampingan di area layanan", "Pemohon", "15 mnt", "Form Pendampingan", "Form Pendampingan terisi"],
+                    ["Petugas memberi informasi tentang layanan Space Tidayu", "Petugas", "60 mnt", "Informasi layanan Space Tidayu", "Form pendampingan dan konsultasi"],
+                    ["Petugas menjelaskan alur permohonan, kanal pengajuan, dokumen/data yang disiapkan, dan batasan layanan informasi ketataruangan dan bangunan gedung", "Petugas", "60 mnt", "Informasi Lahan/KKPR, PBG/SLF, Peil Banjir", "Form pendampingan dan konsultasi"],
+                    ["Jika pemohon ingin lanjut, petugas menjadwalkan pendampingan lanjutan", "Petugas", "60 mnt", "Form pendampingan dan konsultasi", "Jadwal pendampingan lanjutan"],
+                    ["Ketua tim mengundang pendampingan untuk cek kelengkapan administrasi sesuai bidang layanan", "Ketua", "1 hari", "Jadwal pendampingan lanjutan", "Surat undangan pendampingan lanjutan"],
+                    ["Pemohon menyiapkan kelengkapan persyaratan administrasi", "Pemohon", "2 minggu", "Berkas persyaratan informasi lahan/KKPR/PBG/SLF/peil banjir", "Berkas persyaratan administrasi"],
+                    ["Petugas memeriksa kelengkapan berkas dengan daftar periksa, dan survei lapangan bila perlu", "Petugas", "60 mnt", "Berkas persyaratan administrasi", "Form ceklis kelengkapan sesuai bidang layanan"],
+                    ["Bila ada kekurangan atau kesalahan, petugas memberi waktu perbaikan kepada pemohon", "Pemohon", "2 minggu", "Berkas persyaratan", "Berkas persyaratan administrasi"],
+                    ["Petugas mendampingi unggah berkas pada layanan berbasis web bila diperlukan", "Petugas", "5 mnt", "Jadwal/agenda pejabat atau staf yang dituju", "Konfirmasi diterima/ditolak"],
+                    ["Petugas mencatat hasil konsultasi, mendokumentasikan dokumen pendukung, dan menutup layanan (registrasi konsultasi dan arsip pendampingan)", "Petugas", "10 mnt", "Buku register", "Berita acara konsultasi dan pencatatan selesai"],
+                    ["Pemohon mengisi barcode kepuasan sebagai bahan evaluasi kinerja", "Pemohon", "5 mnt", "Meja layanan", "Layanan selesai"]]
+            },
+            {
+                note: "12 langkah kunjungan tamu, total sekitar 65 menit. Pelaksana utama: petugas layanan dan staf teknis.", s: [
+                    ["Pemohon mengisi barcode buku tamu digital di area layanan", "Pemohon", "5 mnt", "Meja Front Office", "Tamu tiba di meja front office"],
+                    ["Pemohon menyampaikan kebutuhan konsultasi pra-permohonan KKPR/PBG-SLF beserta rencana kegiatan dan lokasi", "Pemohon", "5 mnt", "—", "—"],
+                    ["Petugas mencatat identitas/kontak, alamat atau koordinat, jenis kegiatan, luas lahan, tujuan, intensitas dan kondisi bangunan pada Formulir Pencatatan Konsultasi", "Petugas", "5 mnt", "Identitas dan tujuan kunjungan", "Verifikasi kunjungan tamu"],
+                    ["Petugas menjelaskan alur permohonan, kanal pengajuan, dokumen/data yang disiapkan, dan batasan layanan", "Petugas", "5 mnt", "Buku tamu dan identitas tamu", "Data kunjungan tercatat di buku tamu"],
+                    ["Petugas memeriksa awal kelengkapan dokumen berdasarkan daftar periksa pendampingan", "Petugas", "5 mnt", "Identitas dan tujuan kunjungan", "Informasi kedatangan tersampaikan"],
+                    ["Staf teknis menelaah lokasi dan rencana kegiatan berdasarkan data tata ruang (RTRW/RDTR)", "Petugas", "5 mnt", "Jadwal/agenda pejabat atau staf", "Konfirmasi diterima/ditolak"],
+                    ["Bila dokumen kurang, petugas menyampaikan kekurangan pada Lembar Daftar Kekurangan/Perbaikan sebelum pengecekan teknis lanjut", "Petugas", "5 mnt", "Jadwal/agenda pejabat atau staf", "Kepastian atau jadwal ulang"],
+                    ["Staf teknis meminta pemohon memperbaiki atau menegaskan alamat, koordinat, batas lokasi, luas, atau rencana kegiatan", "Petugas", "5 mnt", "Kartu tamu", "Tamu sampai pada tujuan"],
+                    ["Staf teknis menyampaikan hasil pendampingan awal, dengan catatan bukan penetapan atau persetujuan KKPR/PBG-SLF", "Petugas", "5 mnt", "Ruang kerja/ruang pertemuan", "Pertemuan terlaksana"],
+                    ["Petugas mengarahkan langkah pengajuan melalui sistem/instansi berwenang, mengingatkan persyaratan terbaru, dan mendampingi pengisian SIMBG", "Petugas", "5 mnt", "Kartu tamu", "Kartu tamu kembali"],
+                    ["Petugas mencatat hasil konsultasi, mendokumentasikan dokumen pendukung, dan menutup layanan", "Petugas", "10 mnt", "Buku tamu", "Pencatatan kunjungan selesai"],
+                    ["Pemohon mengisi barcode kepuasan layanan", "Pemohon", "5 mnt", "Meja Front Office", "Layanan tamu selesai"]]
+            }];
+        var fi = 0, role = "";
+        function esc(s) { return s.replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c] }) }
+        function draw() {
+            var h = ""; document.getElementById("flowNote").textContent = F[fi].note;
+            F[fi].s.forEach(function (s, i) {
+                if (role && s[1] !== role) return;
+                h += '<details class="st ' + s[1] + '"><summary><span class="n">' + (i + 1) + '</span><span class="t">' + esc(s[0]) + '</span><span class="tm">' + s[2] + '</span></summary><div class="bd"><span class="tag ' + s[1] + '">' + s[1] + '</span><br><b>Persyaratan:</b> ' + esc(s[3]) + '<br><b>Output:</b> ' + esc(s[4]) + '</div></details>';
+            });
+            document.getElementById("steps").innerHTML = h || '<p class="mut">Tidak ada langkah untuk peran ini.</p>';
+        }
+        function seg(id, fn) { document.getElementById(id).addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; this.querySelectorAll("button").forEach(function (x) { x.classList.remove("on") }); b.classList.add("on"); fn(b); draw() }) }
+        seg("flowSeg", function (b) { fi = +b.dataset.f });
+        seg("roleSeg", function (b) { role = b.dataset.r });
+        function route() {
+            var id = (location.hash || "#beranda").slice(1);
+            if (!document.getElementById(id)) id = "beranda";
+            document.querySelectorAll("section").forEach(function (s) { s.classList.toggle("hid", s.id !== id) });
+            document.querySelectorAll("nav a").forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === "#" + id) });
+            window.scrollTo(0, 0);
+        }
+        window.addEventListener("hashchange", route);
+        draw(); route();
+    </script>
+</body>
+
+</html>
